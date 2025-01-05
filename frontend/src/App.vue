@@ -2,7 +2,7 @@
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark" style="background-color: #262631;">
       <a href="/" class="navbar-brand">
-        <img src="../../../ant.jpg" alt="" width="30" height="30" class="d-inline-block rounded"
+        <img src="./assets/osel.jpg" alt="" width="30" height="30" class="d-inline-block rounded"
           style="margin-left: 20px;">
         PokeBet</a>
       <div class="navbar-nav me-auto">
