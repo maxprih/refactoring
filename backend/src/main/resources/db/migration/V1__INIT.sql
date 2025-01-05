@@ -1,3 +1,6 @@
+CREATE TYPE bet_status AS ENUM ('WIN', 'LOSE', 'TBD');
+CREATE CAST (varchar AS bet_status) WITH INOUT AS IMPLICIT;
+
 CREATE TABLE "user"
 (
     id       SERIAL PRIMARY KEY,
@@ -84,9 +87,6 @@ CREATE TABLE Match_Event
     match_id    INT                NOT NULL REFERENCES Match (id),
     check ( coefficient > 1 )
 );
-
-CREATE TYPE bet_status AS ENUM ('WIN', 'LOSE', 'TBD');
-CREATE CAST (varchar AS bet_status) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE Bet
 (
