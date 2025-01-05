@@ -14,3 +14,9 @@ spring:
 jwt:
   secret: 9la9g493ghlgmarthr0429urul4301yh937gc763fe87p8a8oag3gf
   lifetime: 59m
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    enabled: true
