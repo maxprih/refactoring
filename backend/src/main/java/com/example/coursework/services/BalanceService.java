@@ -5,6 +5,7 @@ import com.example.coursework.models.dto.requests.WithdrawRequest;
 import com.example.coursework.models.entity.Balance;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.BalanceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @author max_pri
  */
 @Service
+@Slf4j
 public class BalanceService {
     private final BalanceRepository balanceRepository;
     private final TransactionService transactionService;
@@ -41,6 +43,7 @@ public class BalanceService {
     public void addFreeMoney() {
         User user = userRetrievalService.getUserFromContext();
         if (user.getBalance().getAmount() < 500) {
+            log.info("User {} has received 50 free money", user.getLogin());
             changeUserBalance(user, 50);
         } else {
             throw new NoFreeMoneyException();
@@ -50,5 +53,7 @@ public class BalanceService {
     public void withdraw(WithdrawRequest request) {
         User user = userRetrievalService.getUserFromContext();
         changeUserBalance(user, -request.getAmount());
+
+        log.info("User {} has withdrawn {}", user.getLogin(), request.getAmount());
     }
 }

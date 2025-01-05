@@ -10,6 +10,7 @@ import com.example.coursework.models.entity.User;
 import com.example.coursework.models.entity.enums.BetStatus;
 import com.example.coursework.repositories.BetRepository;
 import com.example.coursework.repositories.MatchEventRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  * @author max_pri
  */
 @Service
+@Slf4j
 public class BetService {
     private final BetRepository betRepository;
     private final BalanceService balanceService;
@@ -82,5 +84,6 @@ public class BetService {
                 .build();
         betRepository.save(bet);
         balanceService.changeUserBalance(user, -request.getAmount());
+        log.info("User {} has made a bet with amount {}", user.getLogin(), request.getAmount());
     }
 }

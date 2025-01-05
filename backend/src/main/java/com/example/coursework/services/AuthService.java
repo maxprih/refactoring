@@ -10,6 +10,7 @@ import com.example.coursework.models.dto.requests.JwtRequest;
 import com.example.coursework.models.dto.responses.SignInResponse;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.utils.JwtTokenUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
+@Slf4j
 public class AuthService {
     private final UserService userService;
     private final UserRetrievalService userRetrievalService;
@@ -45,6 +47,7 @@ public class AuthService {
         User user = userRetrievalService.findByLogin(userDetails.getUsername()).get();
         String token = jwtTokenUtils.generateToken(userDetails);
 
+        log.info("User {} has been successfully authenticated", user.getLogin());
         return ResponseEntity.ok(new SignInResponse(token, user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), user.getRoles()));
     }
 
@@ -56,11 +59,15 @@ public class AuthService {
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с указанным логином уже существует"), HttpStatus.BAD_REQUEST);
         }
         User user = userService.createNewUser(registrationUserDto);
+
+        log.info("User {} has been successfully registered", user.getLogin());
         return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), user.getRoles()));
     }
 
     public UserDto getMe() {
         User user = userRetrievalService.getUserFromContext();
+
+        log.info("User {} has been successfully retrieved", user.getLogin());
         return new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), user.getRoles());
     }
 }
