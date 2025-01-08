@@ -36,19 +36,16 @@ import java.util.List;
  * @author max_pri
  */
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer {
     private final JwtRequestFilter jwtRequestFilter;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

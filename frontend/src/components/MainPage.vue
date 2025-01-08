@@ -38,7 +38,6 @@ export default {
           return dateA - dateB;
         });
 
-        // Preload random Pokémon images for each match
         this.matches = await Promise.all(
             matches.map(async (match) => {
               const randomPokemonImage1 = await this.getRandomPokemonImage();
@@ -59,7 +58,7 @@ export default {
         return await apiService.getRandomPokemonImage();
       } catch (error) {
         console.error("Error fetching Pokémon image:", error);
-        return ""; // Fallback to empty string if the API fails
+        return "";
       }
     }
   },
