@@ -1,16 +1,15 @@
 package com.example.coursework.services;
 
-/**
- * @author max_pri
- */
 import com.example.coursework.exceptions.AppError;
-import com.example.coursework.models.dto.RegistrationUserDto;
-import com.example.coursework.models.dto.UserDto;
-import com.example.coursework.models.dto.requests.JwtRequest;
-import com.example.coursework.models.dto.responses.SignInResponse;
+import com.example.coursework.models.entity.Role;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.utils.JwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.bebra.dto.RegistrationUserDto;
+import org.bebra.dto.RoleDto;
+import org.bebra.dto.UserDto;
+import org.bebra.dto.requests.JwtRequest;
+import org.bebra.dto.responses.SignInResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * @author max_pri
+ */
 @Service
 @Slf4j
 public class AuthService {
@@ -48,7 +53,7 @@ public class AuthService {
         String token = jwtTokenUtils.generateToken(userDetails);
 
         log.info("User {} has been successfully authenticated", user.getLogin());
-        return ResponseEntity.ok(new SignInResponse(token, user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), user.getRoles()));
+        return ResponseEntity.ok(new SignInResponse(token, user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), convertToDto(user.getRoles())));
     }
 
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
@@ -61,13 +66,17 @@ public class AuthService {
         User user = userService.createNewUser(registrationUserDto);
 
         log.info("User {} has been successfully registered", user.getLogin());
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), user.getRoles()));
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), convertToDto(user.getRoles())));
     }
 
     public UserDto getMe() {
         User user = userRetrievalService.getUserFromContext();
 
         log.info("User {} has been successfully retrieved", user.getLogin());
-        return new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), user.getRoles());
+        return new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), convertToDto(user.getRoles()));
+    }
+
+    private Set<RoleDto> convertToDto(Set<Role> roles) {
+        return roles.stream().map(role -> new RoleDto(role.getId(), role.getRoleName())).collect(Collectors.toSet());
     }
 }

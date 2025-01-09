@@ -1,9 +1,9 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.TransactionDto;
 import com.example.coursework.models.entity.Transaction;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.TransactionRepository;
+import org.bebra.dto.TransactionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,11 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.requests.ChangeEventRequest;
-import com.example.coursework.models.dto.requests.CreateMatchEventRequest;
 import com.example.coursework.models.entity.Match;
 import com.example.coursework.models.entity.MatchEvent;
 import com.example.coursework.repositories.MatchEventRepository;
 import com.example.coursework.repositories.MatchRepository;
+import org.bebra.dto.requests.ChangeEventRequest;
+import org.bebra.dto.requests.CreateMatchEventRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

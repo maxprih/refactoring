@@ -1,6 +1,5 @@
 package com.example.coursework.repositories;
 
-import com.example.coursework.models.dto.BetDto;
 import com.example.coursework.models.entity.Bet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

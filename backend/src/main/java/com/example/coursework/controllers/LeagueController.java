@@ -1,9 +1,9 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.LeagueDto;
-import com.example.coursework.models.dto.requests.CreateLeagueRequest;
 import com.example.coursework.repositories.LeagueRepository;
 import com.example.coursework.services.LeagueService;
+import org.bebra.dto.LeagueDto;
+import org.bebra.dto.requests.CreateLeagueRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,7 @@
 package com.example.coursework.models.entity;
 
-import com.example.coursework.models.entity.enums.BetStatus;
-import com.example.coursework.models.entity.enums.MatchEventStatus;
 import jakarta.persistence.*;
+import org.bebra.enums.MatchEventStatus;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

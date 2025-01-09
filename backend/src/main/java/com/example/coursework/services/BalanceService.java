@@ -1,11 +1,11 @@
 package com.example.coursework.services;
 
 import com.example.coursework.exceptions.NoFreeMoneyException;
-import com.example.coursework.models.dto.requests.WithdrawRequest;
 import com.example.coursework.models.entity.Balance;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.BalanceRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.bebra.dto.requests.WithdrawRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

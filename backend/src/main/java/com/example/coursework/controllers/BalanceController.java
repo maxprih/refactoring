@@ -1,7 +1,7 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.requests.WithdrawRequest;
 import com.example.coursework.services.BalanceService;
+import org.bebra.dto.requests.WithdrawRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

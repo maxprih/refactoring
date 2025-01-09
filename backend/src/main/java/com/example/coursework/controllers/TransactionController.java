@@ -1,8 +1,7 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.TransactionDto;
-import com.example.coursework.models.dto.requests.WithdrawRequest;
 import com.example.coursework.services.TransactionService;
+import org.bebra.dto.TransactionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

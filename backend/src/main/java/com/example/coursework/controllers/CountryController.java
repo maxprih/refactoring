@@ -1,9 +1,9 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.CountryDto;
-import com.example.coursework.models.dto.requests.CreateCountryRequest;
 import com.example.coursework.repositories.CountryRepository;
 import com.example.coursework.services.CountryService;
+import org.bebra.dto.CountryDto;
+import org.bebra.dto.requests.CreateCountryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

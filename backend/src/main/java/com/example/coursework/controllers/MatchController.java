@@ -1,9 +1,9 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.MatchDto;
-import com.example.coursework.models.dto.requests.CreateMatchRequest;
-import com.example.coursework.models.dto.responses.GetAllMatchesResponse;
 import com.example.coursework.services.MatchService;
+import org.bebra.dto.MatchDto;
+import org.bebra.dto.requests.CreateMatchRequest;
+import org.bebra.dto.responses.GetAllMatchesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

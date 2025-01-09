@@ -1,13 +1,13 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.MatchDto;
-import com.example.coursework.models.dto.requests.CreateMatchRequest;
-import com.example.coursework.models.dto.responses.GetAllMatchesResponse;
 import com.example.coursework.models.entity.Country;
 import com.example.coursework.models.entity.League;
 import com.example.coursework.models.entity.Match;
 import com.example.coursework.models.entity.Pokemon;
 import com.example.coursework.repositories.*;
+import org.bebra.dto.MatchDto;
+import org.bebra.dto.requests.CreateMatchRequest;
+import org.bebra.dto.responses.GetAllMatchesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

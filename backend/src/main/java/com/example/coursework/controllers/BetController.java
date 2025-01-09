@@ -1,8 +1,8 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.BetDto;
-import com.example.coursework.models.dto.requests.MakeBetRequest;
 import com.example.coursework.services.BetService;
+import org.bebra.dto.BetDto;
+import org.bebra.dto.requests.MakeBetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

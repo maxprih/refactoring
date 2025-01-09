@@ -1,24 +1,23 @@
 plugins {
-    `java-library`
+    `java`
     `maven-publish`
     id("org.springframework.boot") version "3.4.1"
 }
 
 repositories {
+    mavenCentral()
     mavenLocal()
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
-    }
 }
 
 dependencies {
-    api(libs.org.springframework.boot.spring.boot.starter.data.jpa)
-    api(libs.org.springframework.boot.spring.boot.starter.security)
-    api(libs.org.springframework.boot.spring.boot.starter.web)
-    api(libs.org.springdoc.springdoc.openapi.starter.webmvc.ui)
-    api(libs.io.jsonwebtoken.jjwt.api)
-    api(libs.io.jsonwebtoken.jjwt.impl)
-    api(libs.org.flywaydb.flyway.core)
+    implementation(libs.org.springframework.boot.spring.boot.starter.data.jpa)
+    implementation(libs.org.springframework.boot.spring.boot.starter.security)
+    implementation(libs.org.springframework.boot.spring.boot.starter.web)
+    implementation(libs.org.springdoc.springdoc.openapi.starter.webmvc.ui)
+    implementation(libs.io.jsonwebtoken.jjwt.api)
+    implementation(libs.io.jsonwebtoken.jjwt.impl)
+    implementation(libs.org.flywaydb.flyway.core)
+    implementation("org.bebra:commons:1.0-SNAPSHOT")
     runtimeOnly(libs.org.postgresql.postgresql)
     runtimeOnly(libs.io.jsonwebtoken.jjwt.jackson)
     testImplementation(libs.org.springframework.boot.spring.boot.starter.test)
