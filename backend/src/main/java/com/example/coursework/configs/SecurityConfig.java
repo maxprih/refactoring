@@ -36,31 +36,27 @@ import java.util.List;
  * @author max_pri
  */
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer {
     private final JwtRequestFilter jwtRequestFilter;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .anonymous(anonymous -> anonymous.disable())
-//                .cors(cors -> cors.disable())
                 .anonymous(ann -> ann.disable())
                 .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers( "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/v1/matches/**","/api/v1/balance/**").authenticated()
-//                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

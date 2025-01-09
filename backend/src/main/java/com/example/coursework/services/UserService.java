@@ -3,6 +3,7 @@ package com.example.coursework.services;
 import com.example.coursework.models.dto.RegistrationUserDto;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * @author max_pri
  */
 @Service
+@Slf4j
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserRetrievalService userRetrievalService;
@@ -60,6 +62,7 @@ public class UserService implements UserDetailsService {
         user = userRepository.save(user);
 
         user.setBalance(balanceService.createBalanceForUser(user));
+        log.info("User {} has been successfully created", user.getLogin());
         return user;
     }
 }

@@ -2,13 +2,17 @@
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark" style="background-color: #262631;">
       <a href="/" class="navbar-brand">
-        <img src="../../../ant.jpg" alt="" width="30" height="30" class="d-inline-block rounded"
-          style="margin-left: 20px;">
-        PokeBet</a>
+        <img src="./assets/osel.jpg" alt="" width="30" height="30" class="d-inline-block rounded"
+             style="margin-left: 20px;">
+        VT BETS</a>
       <div class="navbar-nav me-auto">
         <li class="nav-item">
           <router-link to="/main" class="nav-link">
-            <font-awesome-icon icon="home" /> Линия
+            <font-awesome-icon icon="home" /> Matches
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="isAdmin">
+          <router-link to="/admin" class="nav-link"> Admin panel
           </router-link>
         </li>
       </div>
@@ -16,12 +20,12 @@
       <div v-if="!currentUser" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" /> Регистрация
+            <font-awesome-icon icon="user-plus" /> Register
           </router-link>
         </li>
         <li class="nav-item">
           <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" /> Войти
+            <font-awesome-icon icon="sign-in-alt" /> Login
           </router-link>
         </li>
       </div>
@@ -29,17 +33,17 @@
       <div v-if="currentUser" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/transactions" class="nav-link">
-            Транзакции
+            Transactions
           </router-link>
         </li>
         <li class="nav-item">
           <router-link to="/history" class="nav-link">
-            <font-awesome-icon icon="history" /> История
+            <font-awesome-icon icon="history" /> History
           </router-link>
         </li>
 
         <li class="nav-item nav-link">
-          Баланс:
+          Balance:
           {{ currentUser.balanceAmount }}
         </li>
         <li class="nav-item">
@@ -50,7 +54,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" @click.prevent="logOut">
-            <font-awesome-icon icon="sign-out-alt" /> Выход
+            <font-awesome-icon icon="sign-out-alt" /> Logout
           </a>
         </li>
       </div>
@@ -75,7 +79,14 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    isAdmin() {
+      if (!this.currentUser) {
+        return false;
+      }
+      return (this.$store.state.auth.user.roles).some(role => role.roleName === "ROLE_ADMIN");
     }
+
   },
   methods: {
     logOut() {

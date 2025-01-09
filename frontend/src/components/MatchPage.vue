@@ -1,77 +1,74 @@
 <template>
-    <div data-bs-theme="dark" class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="modal1label" style="text-align:center">{{ pokemon1.name }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div style="display:flex;">
-                        <div>
-                            <ul class="list-group h2" style="width:fit-content" data-bs-theme="dark">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Здоровье:</strong>
-                                    <span class="values">{{ pokemon1.health }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Атака:</strong>
-                                    <span class="values">{{ pokemon1.damage }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Защита:</strong>
-                                    <span class="values">{{ pokemon1.defense }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Страна:</strong>
-                                    <span class="values">{{ pokemon1.countryName }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+  <div data-bs-theme="dark" class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h1 class="modal-title w-100" id="modal2label">
+            <img :src="pokemon1Image" alt="" style="height: 4em;"> {{ pokemon1.name }}
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    </div>
-    <div data-bs-theme="dark" class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="modal2label" style="text-align:center">{{ pokemon2.name }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div style="display:flex;">
-                        <div>
-                            <ul class="list-group h2" style="width:fit-content" data-bs-theme="dark">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Здоровье:</strong>
-                                    <span class="values">{{ pokemon2.health }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Атака:</strong>
-                                    <span class="values">{{ pokemon2.damage }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Защита:</strong>
-                                    <span class="values">{{ pokemon2.defense }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <strong>Страна:</strong>
-                                    <span class="values">{{ pokemon2.countryName }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <div class="modal-body">
+          <ul class="list-group h3 text-center mx-auto" style="max-width: 400px;">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Здоровье:</strong>
+              <span>{{ pokemon1.health }}<font-awesome-icon class="ms-2" icon="heartbeat" /></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Атака:</strong>
+              <span>{{ pokemon1.damage }}<font-awesome-icon class="ms-2" icon="fist-raised" /></span>
 
-            </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Защита:</strong>
+              <span>{{ pokemon1.defense }}<font-awesome-icon class="ms-2" icon="shield-alt" /></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Страна:</strong>
+              <span>{{ pokemon1.countryName }}<font-awesome-icon class="ms-2" icon="globe" /></span>
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
-    <div class="position-absolute start-50 w-50 translate-middle-x">
+  </div>
+  <div data-bs-theme="dark" class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h1 class="modal-title w-100" id="modal2label">
+            <img :src="pokemon2Image" alt="" style="height: 4em;"> {{ pokemon2.name }}
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group h3 text-center mx-auto" style="max-width: 400px;">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Здоровье:</strong>
+              <span>{{ pokemon2.health }}<font-awesome-icon class="ms-2" icon="heartbeat" /></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Атака:</strong>
+              <span>{{ pokemon2.damage }}<font-awesome-icon class="ms-2" icon="fist-raised" /></span>
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Защита:</strong>
+              <span>{{ pokemon2.defense }}<font-awesome-icon class="ms-2" icon="shield-alt" /></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <strong>Страна:</strong>
+              <span>{{ pokemon2.countryName }}<font-awesome-icon class="ms-2" icon="globe" /></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="position-absolute start-50 w-50 translate-middle-x">
         <div class="d-flex flex-row justify-content-between align-items-center rounded-rectangle text-center">
-            <img src="../assets/logo.png" alt="" style="height: 4em;">
+            <img :src="pokemon1Image" alt="" style="height: 4em;">
             <div class="h2" style="width: 25%;">
                 <span class="hovered-text" data-bs-toggle="modal" data-bs-target="#modal1">{{ match.firstPlayerName
                 }}</span>
@@ -81,7 +78,7 @@
                 <span class="hovered-text" data-bs-toggle="modal" data-bs-target="#modal2">{{ match.secondPlayerName
                 }}</span>
             </div>
-            <img src="../assets/logo.png" alt="" style="height: 4em;">
+            <img :src="pokemon2Image" alt="" style="height: 4em;">
         </div>
 
         <div>
@@ -127,6 +124,7 @@
 </template>
 <script>
 import ApiSerivce from "../services/api.service";
+import apiService from "../services/api.service";
 
 export default {
     name: "Match",
@@ -138,7 +136,9 @@ export default {
             pokemon2: "",
             match_events: [],
             chunkedMatchEvents: [],
-            elementsPerRow: 3
+            elementsPerRow: 3,
+            pokemon1Image: "",
+            pokemon2Image: ""
         };
     },
     methods: {
@@ -171,6 +171,14 @@ export default {
         },
         changeEventStatus(matchEvent) {
             ApiSerivce.changeEventStatus(matchEvent.id, matchEvent.status)
+        },
+        async getRandomPokemonsImage() {
+          try {
+            this.pokemon1Image = await apiService.getRandomPokemonImage();
+            this.pokemon2Image = await apiService.getRandomPokemonImage();
+          } catch (error) {
+            console.error(error);
+          }
         }
     },
     computed: {
@@ -193,6 +201,8 @@ export default {
         setTimeout(() => {
             this.getPokemons();
         }, 500);
+
+        this.getRandomPokemonsImage();
     },
 };
 </script>

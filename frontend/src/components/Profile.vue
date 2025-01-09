@@ -32,7 +32,7 @@
         </ul>
       </div>
       <div class="card" style="width:40%;" data-bs-theme="dark">
-        <img src="../../../../ant.jpg" class="card-img-top" alt="Card image cap" style="width:100%;">
+        <img src="../assets/osel.jpg" class="card-img-top" alt="Card image cap" style="width:100%;">
         <div class="card-footer d-grid">
           <div class="input-group" data-bs-theme="dark">
             <input v-model="donateAmount" type="number" class="form-control" placeholder="Сумма пожертвования"
@@ -56,7 +56,7 @@
     <div v-if="showWithdrawAlertSuccessBoolean" data-bs-theme="dark"
       class="alert alert-success position-fixed m-3 fade show" role="alert"
       style="bottom: 0; right: 0; max-width: 300px;">
-      <strong>Success!</strong> Муравей рад!
+      <strong>Success!</strong> Осел рад!
     </div>
   </div>
 </template>

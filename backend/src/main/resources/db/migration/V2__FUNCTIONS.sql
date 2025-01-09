@@ -13,8 +13,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
-
 CREATE OR REPLACE FUNCTION is_bet_won(curr_bet_id INT)
     RETURNS BOOLEAN AS
 $$
@@ -87,7 +85,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION calculate_total_coefficient(curr_bet_id INT)
     RETURNS DOUBLE PRECISION AS
 $$
@@ -111,35 +108,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
-
--- CREATE OR REPLACE FUNCTION calculate_bet_winnings(curr_bet_id INT)
---     RETURNS DOUBLE PRECISION AS
--- $$
--- DECLARE
---     total_winnings    DOUBLE PRECISION := 0;
---     is_won            BOOLEAN          := is_bet_won(curr_bet_id);
---     total_coefficient DOUBLE PRECISION := calculate_total_coefficient(curr_bet_id);
---     bet_amount        INT;
--- BEGIN
---     If NOT is_won THEN
---         RETURN 0;
---     end if;
---
---     SELECT B.amount
---     INTO bet_amount
---     FROM Bet B
---              JOIN Match_Event_Bet MEB ON B.id = MEB.bet_id
---              JOIN Match_Event ME ON MEB.match_event_id = ME.id
---     WHERE B.id = curr_bet_id;
---
---     total_winnings := total_coefficient * bet_amount;
---
---     RETURN round(total_winnings::numeric, 2);
--- END;
--- $$ LANGUAGE plpgsql;
-
-
 CREATE OR REPLACE FUNCTION calculate_bet_winnings(curr_bet_id INTEGER) RETURNS DOUBLE PRECISION
     LANGUAGE plpgsql
 AS $$
@@ -148,7 +116,6 @@ DECLARE
     bet_status        bet_status;
     total_coefficient DOUBLE PRECISION := calculate_total_coefficient(curr_bet_id);
 BEGIN
-    -- Get the bet status
     SELECT status
     INTO bet_status
     FROM Bet
@@ -167,10 +134,6 @@ BEGIN
 END;
 $$;
 
--- Change the function owner if necessary
-    ALTER FUNCTION calculate_bet_winnings(INTEGER) OWNER TO max_pri;
-
-
 CREATE OR REPLACE FUNCTION get_matches_within_24_hours()
     RETURNS TABLE
             (
@@ -188,8 +151,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
--- trigger
 CREATE OR REPLACE FUNCTION check_match_date_within_league_date()
     RETURNS TRIGGER AS
 $$
@@ -201,8 +162,6 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
-
 
 CREATE OR REPLACE FUNCTION update_bet_status()
     RETURNS TRIGGER AS
@@ -216,7 +175,7 @@ BEGIN
                    SELECT bet_id
                    FROM Match_Event_Bet
                    WHERE match_event_id = NEW.id
-               )
+           )
     INTO bet_ids;
 
     FOREACH curr_bet_id IN ARRAY bet_ids
@@ -265,8 +224,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
--- trigger
 CREATE OR REPLACE FUNCTION check_bet_amount()
     RETURNS TRIGGER AS
 $$
@@ -281,7 +238,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- trigger
 CREATE OR REPLACE FUNCTION update_user_balance()
     RETURNS TRIGGER AS $$
 BEGIN

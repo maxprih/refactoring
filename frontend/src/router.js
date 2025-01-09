@@ -1,5 +1,4 @@
 import { createWebHistory, createRouter } from "vue-router";
-// import store from "./store";
 
 import Home from "./components/Home.vue";
 import Main from "./components/MainPage.vue"
@@ -9,6 +8,7 @@ import Register from "./components/Register.vue";
 import Unauth from "./components/Unauth.vue";
 import BetHistory from "./components/BetHistory.vue";
 import Transactions from "./components/Transactions.vue";
+import AdminPanel from "./components/AdminPanel.vue"
 
 
 const Profile = () => import("./components/Profile.vue")
@@ -60,6 +60,11 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: Profile,
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminPanel,
   },
 ];
 

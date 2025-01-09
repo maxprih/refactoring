@@ -63,6 +63,73 @@ class ApiSerivce {
       headers: authHeader(),
     });
   }
+  createCountry(name) {
+    const createCountryRequest = {
+      name: name,
+    };
+    return axios.post(API_URL + "country", createCountryRequest, {
+      headers: authHeader(),
+    });
+  }
+  createLeague(name, start_date, end_date) {
+    const createLeagueRequest = {
+      name: name,
+      startDate: start_date,
+      endDate: end_date
+    };
+    return axios.post(API_URL + "league", createLeagueRequest, {
+      headers: authHeader(),
+    });
+  }
+  addPlayer(name, health, damage, defense, countryId) {
+    const createPokemonRequest = {
+      name: name,
+      health: health,
+      damage: damage,
+      defense: defense,
+      countryId: countryId
+    };
+    return axios.post(API_URL + "pokemon", createPokemonRequest, {
+      headers: authHeader(),
+    });
+  }
+  addMatch(player1Id, player2Id, date, leagueId, countryId) {
+    const createMatchRequest = {
+      firstPlayerId: player1Id,
+      secondPlayerId: player2Id,
+      date: date,
+      leagueId: leagueId,
+      countryId: countryId
+    };
+    return axios.post(API_URL + "matches", createMatchRequest, {
+      headers: authHeader(),
+    });
+  }
+  addMatchEvent(matchId, name, coefficient) {
+    const createMatchEventRequest = {
+      matchId: matchId,
+      name: name,
+      coefficient: coefficient,
+      status: "TBD"
+    };
+    return axios.post(API_URL + "events", createMatchEventRequest, {
+      headers: authHeader(),
+    });
+  }
+  getAllPlayers() {
+    return axios.get(API_URL + "pokemon", { headers: authHeader() })
+  }
+  getAllCountries() {
+    return axios.get(API_URL + "country", { headers: authHeader() })
+  }
+  getAllLeagues() {
+    return axios.get(API_URL + "league", { headers: authHeader() })
+  }
+  async getRandomPokemonImage() {
+    const randomId = Math.floor(Math.random() * 1010) + 1;
+    const response =  await axios.get(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+    return response.data.sprites.other["official-artwork"].front_default;
+  }
 }
 
 export default new ApiSerivce();
