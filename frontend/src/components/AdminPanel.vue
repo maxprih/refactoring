@@ -154,7 +154,7 @@ export default {
     getMatches() {
       apiService.getMatches()
           .then(response => {
-            this.matches = response.data.matches;
+            this.matches = response.data.content;
           })
     },
     createEvent() {

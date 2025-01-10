@@ -22,8 +22,15 @@ class ApiSerivce {
   getMatchById(id) {
     return axios.get(API_URL + "matches/" + id, { headers: authHeader() });
   }
-  getMatches() {
-    return axios.get(API_URL + "matches", { headers: authHeader() });
+  getMatches(page, pageSize, sort) {
+    return axios.get(`${API_URL}matches`, {
+      headers: authHeader(),
+      params: {
+        page,
+        size: pageSize,
+        sort,
+      },
+    });
   }
   getMoney() {
     return axios.post(API_URL + "balance/free", {}, { headers: authHeader() });
@@ -37,14 +44,28 @@ class ApiSerivce {
       headers: authHeader(),
     });
   }
-  getAllBets() {
-    return axios.get(API_URL + "bets", { headers: authHeader() });
+  getAllBets(page, pageSize, sort) {
+    return axios.get(`${API_URL}bets`, {
+      headers: authHeader(),
+      params: {
+        page,
+        size: pageSize,
+        sort,
+      },
+    });
   }
   getPokemon(name) {
     return axios.get(API_URL + "pokemon/" + name, { headers: authHeader() });
   }
-  getAllTransactions() {
-    return axios.get(API_URL + "transaction", { headers: authHeader() });
+  getAllTransactions(page, pageSize, sort) {
+    return axios.get(`${API_URL}transaction`, {
+      headers: authHeader(),
+      params: {
+        page,
+        size: pageSize,
+        sort,
+      },
+    });
   }
   donateToAnt(amount) {
     const withdrawRequest = {
