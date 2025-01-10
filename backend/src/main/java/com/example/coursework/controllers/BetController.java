@@ -4,10 +4,10 @@ import com.example.coursework.services.BetService;
 import org.bebra.dto.BetDto;
 import org.bebra.dto.requests.MakeBetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author max_pri
@@ -29,8 +29,8 @@ public class BetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BetDto>> getAllBets() {
-        return ResponseEntity.ok(betService.getAllBets());
+    public ResponseEntity<Page<BetDto>> getAllBets(Pageable pageable) {
+        return ResponseEntity.ok(betService.getAllBets(pageable));
     }
 
 }

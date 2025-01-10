@@ -17,11 +17,13 @@ dependencies {
     implementation(libs.io.jsonwebtoken.jjwt.api)
     implementation(libs.io.jsonwebtoken.jjwt.impl)
     implementation(libs.org.flywaydb.flyway.core)
+    implementation("org.mapstruct:mapstruct:1.6.3")
     implementation("org.bebra:commons:1.0-SNAPSHOT")
     runtimeOnly(libs.org.postgresql.postgresql)
     runtimeOnly(libs.io.jsonwebtoken.jjwt.jackson)
     testImplementation(libs.org.springframework.boot.spring.boot.starter.test)
     compileOnly(libs.org.projectlombok.lombok)
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
     annotationProcessor(libs.org.projectlombok.lombok)
 }
 

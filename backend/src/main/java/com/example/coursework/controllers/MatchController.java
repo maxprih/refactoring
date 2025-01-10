@@ -3,8 +3,9 @@ package com.example.coursework.controllers;
 import com.example.coursework.services.MatchService;
 import org.bebra.dto.MatchDto;
 import org.bebra.dto.requests.CreateMatchRequest;
-import org.bebra.dto.responses.GetAllMatchesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,8 @@ public class MatchController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAllMatchesResponse> getAllMatches() {
-        return ResponseEntity.ok(matchService.getAllMatches());
+    public ResponseEntity<Page<MatchDto>> getAllMatches(Pageable pageable) {
+        return ResponseEntity.ok(matchService.getAllMatches(pageable));
     }
 
     @GetMapping("/{id}")

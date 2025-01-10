@@ -12,6 +12,8 @@ import org.bebra.dto.MatchEventDto;
 import org.bebra.dto.requests.MakeBetRequest;
 import org.bebra.enums.BetStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,11 +41,10 @@ public class BetService {
         this.userRetrievalService = userRetrievalService;
     }
 
-    public List<BetDto> getAllBets() {
+    public Page<BetDto> getAllBets(Pageable pageable) {
         User user = userRetrievalService.getUserFromContext();
-        List<Bet> bets = betRepository.findAllByUserId(user.getId());
-        return bets.stream()
-                .map(bet -> {
+        Page<Bet> bets = betRepository.findAllByUserId(pageable, user.getId());
+        return bets.map(bet -> {
                     Set<MatchEventDto> matchEventDtos = matchEventRepository.findByBetId(bet.getId());
                     double productOfCoefficients = matchEventDtos.stream()
                             .mapToDouble(MatchEventDto::getCoefficient)
@@ -59,8 +60,7 @@ public class BetService {
                             .coefficient(productOfCoefficients)
                             .winnings(winnings)
                             .build();
-                })
-                .toList();
+                });
     }
 
     @Transactional

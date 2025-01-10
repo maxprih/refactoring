@@ -5,14 +5,15 @@ import com.example.coursework.models.entity.League;
 import com.example.coursework.models.entity.Match;
 import com.example.coursework.models.entity.Pokemon;
 import com.example.coursework.repositories.*;
+import com.example.coursework.utils.mappers.MatchMapper;
 import org.bebra.dto.MatchDto;
 import org.bebra.dto.requests.CreateMatchRequest;
-import org.bebra.dto.responses.GetAllMatchesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneOffset;
-import java.util.List;
 
 /**
  * @author max_pri
@@ -24,23 +25,20 @@ public class MatchService {
     private final LeagueRepository leagueRepository;
     private final MatchEventRepository matchEventRepository;
     private final PokemonRepository pokemonRepository;
+    private final MatchMapper matchMapper;
 
     @Autowired
-    public MatchService(MatchRepository matchRepository, CountryRepository countryRepository, LeagueRepository leagueRepository, MatchEventRepository matchEventRepository, PokemonRepository pokemonRepository) {
+    public MatchService(MatchRepository matchRepository, CountryRepository countryRepository, LeagueRepository leagueRepository, MatchEventRepository matchEventRepository, PokemonRepository pokemonRepository, MatchMapper matchMapper) {
         this.matchRepository = matchRepository;
         this.countryRepository = countryRepository;
         this.leagueRepository = leagueRepository;
         this.matchEventRepository = matchEventRepository;
         this.pokemonRepository = pokemonRepository;
+        this.matchMapper = matchMapper;
     }
 
-    public GetAllMatchesResponse getAllMatches() {
-        List<MatchDto> matchDtos = matchRepository.findAllMatchesInfo();
-
-
-        return GetAllMatchesResponse.builder()
-                .matches(matchDtos)
-                .build();
+    public Page<MatchDto> getAllMatches(Pageable pageable) {
+        return matchRepository.findAll(pageable).map(matchMapper::toDto);
     }
 
     public void create(CreateMatchRequest createMatchRequest) {
@@ -53,7 +51,7 @@ public class MatchService {
         Match match = new Match();
         match.setCountry(country);
         match.setLeague(league);
-        match.setDate(createMatchRequest.getDate().toInstant(ZoneOffset.UTC)); //change on front to instant
+        match.setDate(createMatchRequest.getDate().toInstant(ZoneOffset.UTC));
         match.setFirstPlayer(pokemon1);
         match.setSecondPlayer(pokemon2);
 
