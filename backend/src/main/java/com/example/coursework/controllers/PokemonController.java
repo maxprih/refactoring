@@ -1,8 +1,8 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.PokemonDto;
-import com.example.coursework.models.dto.requests.CreatePokemonRequest;
 import com.example.coursework.services.PokemonService;
+import org.bebra.dto.PokemonDto;
+import org.bebra.dto.requests.CreatePokemonRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

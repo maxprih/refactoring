@@ -1,10 +1,10 @@
 package com.example.coursework.models.entity;
 
-import com.example.coursework.models.entity.enums.BetStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.bebra.enums.BetStatus;
 
 import java.time.Instant;
 import java.util.LinkedHashSet;

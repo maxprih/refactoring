@@ -1,9 +1,9 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.RegistrationUserDto;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.bebra.dto.RegistrationUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

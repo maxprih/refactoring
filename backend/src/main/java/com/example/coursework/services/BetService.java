@@ -1,26 +1,26 @@
 package com.example.coursework.services;
 
 import com.example.coursework.exceptions.AppError;
-import com.example.coursework.models.dto.BetDto;
-import com.example.coursework.models.dto.MatchEventDto;
-import com.example.coursework.models.dto.requests.MakeBetRequest;
 import com.example.coursework.models.entity.Bet;
 import com.example.coursework.models.entity.MatchEvent;
 import com.example.coursework.models.entity.User;
-import com.example.coursework.models.entity.enums.BetStatus;
 import com.example.coursework.repositories.BetRepository;
 import com.example.coursework.repositories.MatchEventRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.bebra.dto.BetDto;
+import org.bebra.dto.MatchEventDto;
+import org.bebra.dto.requests.MakeBetRequest;
+import org.bebra.enums.BetStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author max_pri
@@ -41,11 +41,10 @@ public class BetService {
         this.userRetrievalService = userRetrievalService;
     }
 
-    public List<BetDto> getAllBets() {
+    public Page<BetDto> getAllBets(Pageable pageable) {
         User user = userRetrievalService.getUserFromContext();
-        List<Bet> bets = betRepository.findAllByUserId(user.getId());
-        return bets.stream()
-                .map(bet -> {
+        Page<Bet> bets = betRepository.findAllByUserId(pageable, user.getId());
+        return bets.map(bet -> {
                     Set<MatchEventDto> matchEventDtos = matchEventRepository.findByBetId(bet.getId());
                     double productOfCoefficients = matchEventDtos.stream()
                             .mapToDouble(MatchEventDto::getCoefficient)
@@ -61,8 +60,7 @@ public class BetService {
                             .coefficient(productOfCoefficients)
                             .winnings(winnings)
                             .build();
-                })
-                .toList();
+                });
     }
 
     @Transactional

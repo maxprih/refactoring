@@ -1,9 +1,8 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.requests.CreateCountryRequest;
-import com.example.coursework.models.dto.requests.CreateLeagueRequest;
 import com.example.coursework.models.entity.League;
 import com.example.coursework.repositories.LeagueRepository;
+import org.bebra.dto.requests.CreateLeagueRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

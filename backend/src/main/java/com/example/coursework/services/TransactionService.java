@@ -1,10 +1,12 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.TransactionDto;
 import com.example.coursework.models.entity.Transaction;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.TransactionRepository;
+import org.bebra.dto.TransactionDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -24,12 +26,12 @@ public class TransactionService {
         this.userRetrievalService = userRetrievalService;
     }
 
-    public List<TransactionDto> getAllTransactions() {
+    public Page<TransactionDto> getAllTransactions(Pageable pageable) {
         User user = userRetrievalService.getUserFromContext();
 
-        List<Transaction> transactions = transactionRepository.getTransactionByUserId(user.getId());
+        Page<Transaction> transactions = transactionRepository.getTransactionByUserId(pageable, user.getId());
 
-        return transactions.stream().map(transaction -> {
+        return transactions.map(transaction -> {
             String type = transaction.getAmount() >= 0 ? "Пополнение" : "Убыток";
 
             return TransactionDto.builder()
@@ -38,7 +40,7 @@ public class TransactionService {
                     .date(transaction.getDate())
                     .id(transaction.getId())
                     .build();
-        }).toList();
+        });
     }
 
     public void createNewTransaction(Integer amount) {

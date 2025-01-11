@@ -1,7 +1,7 @@
 package com.example.coursework.repositories;
 
-import com.example.coursework.models.dto.PokemonDto;
 import com.example.coursework.models.entity.Pokemon;
+import org.bebra.dto.PokemonDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,9 +16,9 @@ import java.util.List;
 @Repository
 public interface PokemonRepository extends JpaRepository<Pokemon, Integer> {
 
-    @Query("select new com.example.coursework.models.dto.PokemonDto(p.id, p.name, p.health, p.damage, p.defense, p.country.name) FROM Pokemon p where p.name=:name")
+    @Query("select new org.bebra.dto.PokemonDto(p.id, p.name, p.health, p.damage, p.defense, p.country.name) FROM Pokemon p where p.name=:name")
     PokemonDto findPokemonByName(@Param("name") String name);
 
-    @Query("select new com.example.coursework.models.dto.PokemonDto(p.id, p.name, p.health, p.damage, p.defense, p.country.name) FROM Pokemon p")
+    @Query("select new org.bebra.dto.PokemonDto(p.id, p.name, p.health, p.damage, p.defense, p.country.name) FROM Pokemon p")
     List<PokemonDto> getAll();
 }

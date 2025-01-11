@@ -1,11 +1,11 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.PokemonDto;
-import com.example.coursework.models.dto.requests.CreatePokemonRequest;
 import com.example.coursework.models.entity.Country;
 import com.example.coursework.models.entity.Pokemon;
 import com.example.coursework.repositories.CountryRepository;
 import com.example.coursework.repositories.PokemonRepository;
+import org.bebra.dto.PokemonDto;
+import org.bebra.dto.requests.CreatePokemonRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

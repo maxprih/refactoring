@@ -1,8 +1,8 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.requests.ChangeEventRequest;
-import com.example.coursework.models.dto.requests.CreateMatchEventRequest;
 import com.example.coursework.services.MatchEventService;
+import org.bebra.dto.requests.ChangeEventRequest;
+import org.bebra.dto.requests.CreateMatchEventRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

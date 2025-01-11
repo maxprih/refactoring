@@ -2,6 +2,13 @@ import axios from "axios";
 import authHeader from "./auth-header";
 import router from "../router";
 import store from "../store";
+import * as Yup from "yup";
+import {Match} from "@/models/MatchModel";
+import {Bet} from "@/models/BetModel";
+import {Pokemon} from "@/models/PokemonModel";
+import {Transaction} from "@/models/TransactionModel";
+import {Country} from "@/models/CountryModel";
+import {League} from "@/models/LeagueModel";
 
 const API_URL = "http://localhost:8080/api/v1/";
 
@@ -19,11 +26,38 @@ axios.interceptors.response.use(
 );
 
 class ApiSerivce {
-  getMatchById(id) {
-    return axios.get(API_URL + "matches/" + id, { headers: authHeader() });
+  async getMatchById(id) {
+    try {
+      const response = await axios.get(`${API_URL}matches/${id}`, {
+        headers: authHeader(),
+      });
+
+      const validatedData = this.validateResponse(response.data, Match);
+      if (!validatedData) {
+        console.error(`Invalid data received for match ID ${id}`);
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching match by ID:", error);
+      throw error;
+    }
   }
-  getMatches() {
-    return axios.get(API_URL + "matches", { headers: authHeader() });
+  async getMatches(page, pageSize, sort) {
+    try {
+      const response = await axios.get(`${API_URL}matches`, {
+        headers: authHeader(),
+        params: { page, size: pageSize, sort },
+      });
+
+      const validatedData = this.validateResponse(response.data.content, Yup.array().of(Match));
+      if (!validatedData) {
+        console.error("Invalid matches data received.");
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching matches:", error);
+      throw error;
+    }
   }
   getMoney() {
     return axios.post(API_URL + "balance/free", {}, { headers: authHeader() });
@@ -37,14 +71,56 @@ class ApiSerivce {
       headers: authHeader(),
     });
   }
-  getAllBets() {
-    return axios.get(API_URL + "bets", { headers: authHeader() });
+  async getAllBets(page, pageSize, sort) {
+    try {
+      const response = await axios.get(`${API_URL}bets`, {
+        headers: authHeader(),
+        params: { page, size: pageSize, sort },
+      });
+
+      const validatedData = this.validateResponse(response.data.content, Yup.array().of(Bet));
+      if (!validatedData) {
+        console.error("Invalid data received.");
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching bets:", error);
+      throw error;
+    }
   }
-  getPokemon(name) {
-    return axios.get(API_URL + "pokemon/" + name, { headers: authHeader() });
+  async getPokemon(name) {
+    try {
+      const response = await axios.get(`${API_URL}pokemon/${name}`, {
+        headers: authHeader(),
+      });
+
+      const validatedData = this.validateResponse(response.data, Pokemon);
+      if (!validatedData) {
+        console.error(`Invalid data received for pokemon name ${name}`);
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching pokemon by name:", error);
+      throw error;
+    }
   }
-  getAllTransactions() {
-    return axios.get(API_URL + "transaction", { headers: authHeader() });
+
+  async getAllTransactions(page, pageSize, sort) {
+    try {
+      const response = await axios.get(`${API_URL}transaction`, {
+        headers: authHeader(),
+        params: { page, size: pageSize, sort },
+      });
+
+      const validatedData = this.validateResponse(response.data.content, Yup.array().of(Transaction));
+      if (!validatedData) {
+        console.error("Invalid data received.");
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+      throw error;
+    }
   }
   donateToAnt(amount) {
     const withdrawRequest = {
@@ -116,19 +192,66 @@ class ApiSerivce {
       headers: authHeader(),
     });
   }
-  getAllPlayers() {
-    return axios.get(API_URL + "pokemon", { headers: authHeader() })
+  async getAllPlayers() {
+    try {
+      const response = await axios.get(`${API_URL}pokemon`, {
+        headers: authHeader(),
+      });
+
+      const validatedData = this.validateResponse(response.data, Yup.array().of(Pokemon));
+      if (!validatedData) {
+        console.error(`Invalid data received for pokemons`);
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching pokemons:", error);
+      throw error;
+    }
   }
-  getAllCountries() {
-    return axios.get(API_URL + "country", { headers: authHeader() })
+  async getAllCountries() {
+    try {
+      const response = await axios.get(`${API_URL}country`, {
+        headers: authHeader(),
+      });
+
+      const validatedData = this.validateResponse(response.data, Yup.array().of(Country));
+      if (!validatedData) {
+        console.error(`Invalid data received for countries`);
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+      throw error;
+    }
   }
-  getAllLeagues() {
-    return axios.get(API_URL + "league", { headers: authHeader() })
+  async getAllLeagues() {
+    try {
+      const response = await axios.get(`${API_URL}league`, {
+        headers: authHeader(),
+      });
+
+      const validatedData = this.validateResponse(response.data, Yup.array().of(League));
+      if (!validatedData) {
+        console.error(`Invalid data received for leagues`);
+      }
+      return response;
+    } catch (error) {
+      console.error("Error fetching leagues:", error);
+      throw error;
+    }
   }
   async getRandomPokemonImage() {
     const randomId = Math.floor(Math.random() * 1010) + 1;
     const response =  await axios.get(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
     return response.data.sprites.other["official-artwork"].front_default;
+  }
+  validateResponse(data, schema) {
+    try {
+      return schema.validateSync(data, { abortEarly: false, strict: true });
+    } catch (err) {
+      console.error("Validation Error:", err.errors);
+      return null;
+    }
   }
 }
 

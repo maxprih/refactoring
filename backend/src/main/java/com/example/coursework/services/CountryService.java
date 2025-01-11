@@ -1,8 +1,8 @@
 package com.example.coursework.services;
 
-import com.example.coursework.models.dto.requests.CreateCountryRequest;
 import com.example.coursework.models.entity.Country;
 import com.example.coursework.repositories.CountryRepository;
+import org.bebra.dto.requests.CreateCountryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

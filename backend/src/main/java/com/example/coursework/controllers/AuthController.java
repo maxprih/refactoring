@@ -1,9 +1,9 @@
 package com.example.coursework.controllers;
 
-import com.example.coursework.models.dto.RegistrationUserDto;
-import com.example.coursework.models.dto.UserDto;
-import com.example.coursework.models.dto.requests.JwtRequest;
 import com.example.coursework.services.AuthService;
+import org.bebra.dto.RegistrationUserDto;
+import org.bebra.dto.UserDto;
+import org.bebra.dto.requests.JwtRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
