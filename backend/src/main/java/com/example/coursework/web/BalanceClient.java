@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author max_pri
  */
-@FeignClient(name = "balance-service", url = "http://localhost:8081/api/v1/balance")
+@FeignClient(name = "balance-service", url = "http://balance:8081/api/v1/balance")
 public interface BalanceClient {
 
     @GetMapping("/{userId}")

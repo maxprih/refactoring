@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author max_pri
  */
-@FeignClient(name = "main-service", url = "http://localhost:8080")
+@FeignClient(name = "main-service", url = "http://backend:8080")
 public interface MainClient {
     @PostMapping("/api/v1/transaction")
     void createNewTransaction(@RequestParam Integer userId, @RequestParam Integer amount);
