@@ -3,6 +3,7 @@ package com.example.coursework.services;
 import com.example.coursework.models.entity.Transaction;
 import com.example.coursework.models.entity.User;
 import com.example.coursework.repositories.TransactionRepository;
+import com.example.coursework.repositories.UserRepository;
 import org.bebra.dto.TransactionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.List;
 
 /**
  * @author max_pri
@@ -19,11 +19,13 @@ import java.util.List;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRetrievalService userRetrievalService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository, UserRetrievalService userRetrievalService) {
+    public TransactionService(TransactionRepository transactionRepository, UserRetrievalService userRetrievalService, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.userRetrievalService = userRetrievalService;
+        this.userRepository = userRepository;
     }
 
     public Page<TransactionDto> getAllTransactions(Pageable pageable) {
@@ -43,13 +45,11 @@ public class TransactionService {
         });
     }
 
-    public void createNewTransaction(Integer amount) {
-        User user = userRetrievalService.getUserFromContext();
-
+    public void createNewTransaction(Integer userId, Integer amount) {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setDate(Instant.now());
-        transaction.setUser(user);
+        transaction.setUser(userRepository.findById(userId).get());
 
         transactionRepository.save(transaction);
     }

@@ -65,7 +65,7 @@ export default {
         },
       async changePage(newPage) {
         this.page = newPage;
-        await this.getMatches();
+        this.getAllTransactions();
       },
     },
     mounted() {

@@ -30,13 +30,15 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AuthService {
     private final UserService userService;
+    private final BalanceService balanceService;
     private final UserRetrievalService userRetrievalService;
     private final JwtTokenUtils jwtTokenUtils;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthService(UserService userService, UserRetrievalService userRetrievalService, JwtTokenUtils jwtTokenUtils, AuthenticationManager authenticationManager) {
+    public AuthService(UserService userService, BalanceService balanceService, UserRetrievalService userRetrievalService, JwtTokenUtils jwtTokenUtils, AuthenticationManager authenticationManager) {
         this.userService = userService;
+        this.balanceService = balanceService;
         this.userRetrievalService = userRetrievalService;
         this.jwtTokenUtils = jwtTokenUtils;
         this.authenticationManager = authenticationManager;
@@ -53,7 +55,7 @@ public class AuthService {
         String token = jwtTokenUtils.generateToken(userDetails);
 
         log.info("User {} has been successfully authenticated", user.getLogin());
-        return ResponseEntity.ok(new SignInResponse(token, user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), convertToDto(user.getRoles())));
+        return ResponseEntity.ok(new SignInResponse(token, user.getId(), user.getLogin(), user.getName(), balanceService.getBalanceForUser(user).getAmount(), convertToDto(user.getRoles())));
     }
 
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
@@ -66,14 +68,14 @@ public class AuthService {
         User user = userService.createNewUser(registrationUserDto);
 
         log.info("User {} has been successfully registered", user.getLogin());
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), convertToDto(user.getRoles())));
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getName(), balanceService.getBalanceForUser(user).getAmount(), convertToDto(user.getRoles())));
     }
 
     public UserDto getMe() {
         User user = userRetrievalService.getUserFromContext();
 
         log.info("User {} has been successfully retrieved", user.getLogin());
-        return new UserDto(user.getId(), user.getLogin(), user.getName(), user.getBalance().getAmount(), convertToDto(user.getRoles()));
+        return new UserDto(user.getId(), user.getLogin(), user.getName(), balanceService.getBalanceForUser(user).getAmount(), convertToDto(user.getRoles()));
     }
 
     private Set<RoleDto> convertToDto(Set<Role> roles) {

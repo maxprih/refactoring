@@ -1,10 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/refactoring
+    url: jdbc:postgresql://main_db:5432/refactoring
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:

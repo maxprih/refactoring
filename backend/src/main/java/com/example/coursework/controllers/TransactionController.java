@@ -25,4 +25,9 @@ public class TransactionController {
     public ResponseEntity<Page<TransactionDto>> getAllTransactions(Pageable pageable) {
         return ResponseEntity.ok(transactionService.getAllTransactions(pageable));
     }
+
+    @PostMapping
+    public void createNewTransaction(@RequestParam Integer userId, @RequestParam Integer amount) {
+        transactionService.createNewTransaction(userId, amount);
+    }
 }
