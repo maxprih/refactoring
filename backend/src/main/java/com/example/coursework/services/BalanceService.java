@@ -1,12 +1,12 @@
 package com.example.coursework.services;
 
 import com.example.coursework.exceptions.NoFreeMoneyException;
-import com.example.coursework.models.entity.Balance;
 import com.example.coursework.models.entity.User;
-import com.example.coursework.repositories.BalanceRepository;
+import com.example.coursework.web.BalanceClient;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bebra.dto.BalanceDto;
 import org.bebra.dto.requests.WithdrawRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,35 +14,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class BalanceService {
-    private final BalanceRepository balanceRepository;
-    private final TransactionService transactionService;
+    private final BalanceClient balanceClient;
     private final UserRetrievalService userRetrievalService;
 
-    @Autowired
-    public BalanceService(BalanceRepository balanceRepository, TransactionService transactionService, UserRetrievalService userRetrievalService) {
-        this.balanceRepository = balanceRepository;
-        this.transactionService = transactionService;
-        this.userRetrievalService = userRetrievalService;
+    public BalanceDto getBalanceForUser(User user) {
+        return balanceClient.getBalance(user.getId());
     }
 
-    public Balance createBalanceForUser(User user) {
-        Balance balance = new Balance();
-        balance.setUser(user);
-
-        return balanceRepository.save(balance);
+    public BalanceDto createBalanceForUser(User user) {
+        return balanceClient.createBalance(user.getId());
     }
 
-    public Balance changeUserBalance(User user, Integer amount) {
-        Balance balance = user.getBalance();
-        transactionService.createNewTransaction(amount);
-        balance.setAmount(balance.getAmount() + amount);
-        return balanceRepository.save(balance);
+    public BalanceDto changeUserBalance(User user, Integer amount) {
+        return balanceClient.changeBalance(user.getId(), amount);
     }
 
     public void addFreeMoney() {
         User user = userRetrievalService.getUserFromContext();
-        if (user.getBalance().getAmount() < 500) {
+        if (balanceClient.getBalance(user.getId()).getAmount() < 500) {
             log.info("User {} has received 50 free money", user.getLogin());
             changeUserBalance(user, 50);
         } else {

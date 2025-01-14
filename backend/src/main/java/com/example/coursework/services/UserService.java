@@ -61,7 +61,7 @@ public class UserService implements UserDetailsService {
 
         user = userRepository.save(user);
 
-        user.setBalance(balanceService.createBalanceForUser(user));
+        balanceService.createBalanceForUser(user);
         log.info("User {} has been successfully created", user.getLogin());
         return user;
     }

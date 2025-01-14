@@ -4,11 +4,12 @@ plugins {
 }
 
 group = "org.bebra"
-version = "1.0-SNAPSHOT"
+version = "1.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {

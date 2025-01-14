@@ -22,9 +22,6 @@ public class User {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
-    @OneToOne(mappedBy = "user")
-    private Balance balance;
-
     @OneToMany(mappedBy = "user")
     private Set<Bet> bets = new LinkedHashSet<>();
 
@@ -69,14 +66,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Balance getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Balance balance) {
-        this.balance = balance;
     }
 
     public Set<Bet> getBets() {

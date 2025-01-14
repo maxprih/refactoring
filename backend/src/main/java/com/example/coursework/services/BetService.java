@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -66,7 +65,7 @@ public class BetService {
     @Transactional
     public void makeBet(MakeBetRequest request) {
         User user = userRetrievalService.getUserFromContext();
-        if (user.getBalance().getAmount() < request.getAmount()) {
+        if (balanceService.getBalanceForUser(user).getAmount() < request.getAmount()) {
             throw new AppError(HttpStatus.BAD_REQUEST.value(), "Недостаточно денег");
         }
         Set<Integer> eventIds = request.getIds();
