@@ -77,7 +77,7 @@ export default {
         },
       async changePage(newPage) {
         this.page = newPage;
-        await this.getMatches();
+        await this.getAllBets();
       },
     },
     mounted() {
